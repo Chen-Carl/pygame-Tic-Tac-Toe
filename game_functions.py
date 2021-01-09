@@ -5,13 +5,13 @@ from chessboard import Chessboard
 from piece import Piece
 
 
-def check_events(screen, chessboard, pieces):
+def check_events(screen, chessboard, pieces, ai_settings):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            new_piece(screen, chessboard, mouse_x, mouse_y, pieces)
+            new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings)
 
 def update_screen(ai_settings, screen, chessboard, pieces):
     screen.fill(ai_settings.bg_color)
@@ -20,7 +20,7 @@ def update_screen(ai_settings, screen, chessboard, pieces):
         piece.blit_piece()
     pygame.display.flip()
 
-def new_piece(screen, chessboard, mouse_x, mouse_y, pieces):
+def new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings):
     
     if mouse_x > 50 and mouse_x < 50 + 195:
         i = 0
@@ -47,8 +47,12 @@ def new_piece(screen, chessboard, mouse_x, mouse_y, pieces):
         rect_y = chessboard.boxes[index][1] + 192
         print(rect_x, rect_y)
         chessboard.boxes_status[index] = 1
-        piece = Piece(screen, rect_x, rect_y)
+        piece = Piece(screen, rect_x, rect_y, ai_settings)
         pieces.add(piece)
+        if ai_settings.piece_choose == 1:
+            ai_settings.piece_choose = 0
+        elif ai_settings.piece_choose == 0:
+            ai_settings.piece_choose = 1
 
     elif index >= 0 and chessboard.boxes_status[index] == 1:
         pass
