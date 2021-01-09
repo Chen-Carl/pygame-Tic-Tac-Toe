@@ -15,6 +15,7 @@ class Chessboard():
         box8 = [450, 250, 195, 195]
         box9 = [450, 450, 195, 195]
         self.boxes = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
+        self.boxes_status = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     def blit_board(self):
         for i in range(0, 9):
