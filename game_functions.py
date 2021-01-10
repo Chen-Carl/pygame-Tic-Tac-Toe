@@ -56,14 +56,14 @@ def new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings, stats):
         elif ai_settings.piece_choose == 0:
             ai_settings.piece_choose = 1
             chessboard.boxes_status[index] = 1
-        judge_winner(chessboard, stats)
+        judge_winner(chessboard, stats, ai_settings)
 
     elif i >= 0 and j >= 0 and chessboard.boxes_status[index] == 1:
         pass
     elif index < 0:
         pass
     
-def judge_winner(chessboard, stats):
+def judge_winner(chessboard, stats, ai_settings):
     win1 = chessboard.boxes_status[0] == chessboard.boxes_status[1] and chessboard.boxes_status[1] == chessboard.boxes_status[2] and chessboard.boxes_status[0] != 0
     win2 = chessboard.boxes_status[3] == chessboard.boxes_status[4] and chessboard.boxes_status[4] == chessboard.boxes_status[5] and chessboard.boxes_status[3] != 0
     win3 = chessboard.boxes_status[6] == chessboard.boxes_status[7] and chessboard.boxes_status[7] == chessboard.boxes_status[8] and chessboard.boxes_status[6] != 0
@@ -75,7 +75,7 @@ def judge_winner(chessboard, stats):
     win = [win1, win2, win3, win4, win5, win6, win7, win8]
     for i in range(8):
         if win[i]:
-            print("Winner: 1")
+            print("Winner: ", ai_settings.piece_choose)
             stats.game_active = False
 
 def update_pieces(pieces, screen, chessboard, stats, ai_settings):
