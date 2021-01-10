@@ -22,9 +22,11 @@ def run_game():
     # event loop
     while True:
         # listening events from mouse and keyboard
-        if stats.game_active:
-            gf.check_events(chessboard.screen, chessboard, pieces, ai_settings, stats)
+        gf.check_events(chessboard.screen, chessboard, pieces, ai_settings, stats)
         # visualize
+        if stats.game_active:
+            gf.update_pieces(pieces, screen, chessboard, stats, ai_settings)
         gf.update_screen(ai_settings, screen, chessboard, pieces)
+
 
 run_game()

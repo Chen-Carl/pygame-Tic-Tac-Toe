@@ -10,15 +10,16 @@ def check_events(screen, chessboard, pieces, ai_settings, stats):
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            stats.add_new_piece = True
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings, stats)
+            stats.mouse_x = mouse_x
+            stats.mouse_y = mouse_y
 
 def update_screen(ai_settings, screen, chessboard, pieces):
     screen.fill(ai_settings.bg_color)
     chessboard.blit_board()
     for piece in pieces.sprites():
         piece.blit_piece()
-
     pygame.display.flip()
 
 def new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings, stats):
@@ -76,3 +77,7 @@ def judge_winner(chessboard, stats):
         if win[i]:
             print("Winner: 1")
             stats.game_active = False
+
+def update_pieces(pieces, screen, chessboard, stats, ai_settings):
+    if stats.add_new_piece:
+        new_piece(screen, chessboard, stats.mouse_x, stats.mouse_y, pieces, ai_settings, stats)
