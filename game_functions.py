@@ -6,7 +6,7 @@ from piece import Piece
 
 
 def check_events(screen, chessboard, pieces, ai_settings, stats, play_button,
-                 chessbook_button, retract_button):
+                 chessbook_button, retract_button, image_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -19,10 +19,11 @@ def check_events(screen, chessboard, pieces, ai_settings, stats, play_button,
             check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y,
                                    pieces)
             check_retract_button(stats, retract_button, mouse_x, mouse_y, pieces)
+            check_image_button(stats, image_button, mouse_x, mouse_y, ai_settings)
 
 
 def update_screen(ai_settings, screen, chessboard, pieces, play_button, stats,
-                  chessbook_button, retract_button):
+                  chessbook_button, retract_button, image_button):
     screen.fill(ai_settings.bg_color)
     chessboard.blit_board()
     for piece in pieces.sprites():
@@ -32,6 +33,7 @@ def update_screen(ai_settings, screen, chessboard, pieces, play_button, stats,
     if not stats.game_active:
         play_button.draw_button()
         chessbook_button.draw_button()
+        image_button.draw_button()
     pygame.display.flip()
 
 
@@ -150,3 +152,7 @@ def check_retract_button(stats, retract_button, mouse_x, mouse_y, pieces):
             del(stats.stack[-1])
             stats.piece_choose = not stats.piece_choose
             
+def check_image_button(stats, image_button, mouse_x, mouse_y, ai_settings):
+    button_clicked = image_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        ai_settings.image_series = (ai_settings.image_series + 1) % 3
