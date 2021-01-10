@@ -6,7 +6,7 @@ import game_functions as gf
 from settings import Settings
 from chessboard import Chessboard
 from piece import Piece
-
+from Game_stats import GameStats
 
 
 def run_game():
@@ -16,13 +16,14 @@ def run_game():
     pygame.display.set_caption("Tic-Tac-Toe")
 
     chessboard = Chessboard(screen)
+    stats = GameStats(ai_settings)
     pieces = Group()
 
     # event loop
     while True:
         # listening events from mouse and keyboard
-        gf.check_events(chessboard.screen, chessboard, pieces, ai_settings)
-
+        if stats.game_active:
+            gf.check_events(chessboard.screen, chessboard, pieces, ai_settings, stats)
         # visualize
         gf.update_screen(ai_settings, screen, chessboard, pieces)
 
