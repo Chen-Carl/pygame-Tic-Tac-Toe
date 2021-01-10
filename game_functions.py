@@ -5,7 +5,8 @@ from chessboard import Chessboard
 from piece import Piece
 
 
-def check_events(screen, chessboard, pieces, ai_settings, stats, play_button, chessbook_button):
+def check_events(screen, chessboard, pieces, ai_settings, stats, play_button,
+                 chessbook_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -15,9 +16,12 @@ def check_events(screen, chessboard, pieces, ai_settings, stats, play_button, ch
             stats.mouse_x = mouse_x
             stats.mouse_y = mouse_y
             check_play_button(stats, play_button, mouse_x, mouse_y, pieces)
-            check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y, pieces)
+            check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y,
+                                   pieces)
 
-def update_screen(ai_settings, screen, chessboard, pieces, play_button, stats, chessbook_button):
+
+def update_screen(ai_settings, screen, chessboard, pieces, play_button, stats,
+                  chessbook_button):
     screen.fill(ai_settings.bg_color)
     chessboard.blit_board()
     for piece in pieces.sprites():
@@ -125,6 +129,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y, pieces):
         pieces.empty()
 
         stats.game_active = True
+
 
 def check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y, pieces):
     button_clicked = chessbook_button.rect.collidepoint(mouse_x, mouse_y)

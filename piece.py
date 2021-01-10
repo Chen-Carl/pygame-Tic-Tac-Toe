@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Piece(Sprite):
     def __init__(self, screen, rect_x, rect_y, ai_settings, stats):
         super().__init__()
