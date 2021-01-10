@@ -2,12 +2,12 @@ import pygame
 from pygame.sprite import Sprite
 
 class Piece(Sprite):
-    def __init__(self, screen, rect_x, rect_y, ai_settings):
+    def __init__(self, screen, rect_x, rect_y, ai_settings, stats):
         super().__init__()
         self.screen = screen
-        if ai_settings.piece_choose == 0:
+        if stats.piece_choose == 0:
             self.image = pygame.image.load("images/circle.png")
-        elif ai_settings.piece_choose == 1:
+        elif stats.piece_choose == 1:
             self.image = pygame.image.load("images/cross.png")
         self.rect = self.image.get_rect()
         self.rect.centerx = rect_x
