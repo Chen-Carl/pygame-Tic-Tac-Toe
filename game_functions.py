@@ -6,7 +6,7 @@ from piece import Piece
 
 
 def check_events(screen, chessboard, pieces, ai_settings, stats, play_button,
-                 chessbook_button):
+                 chessbook_button, retract_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -18,14 +18,17 @@ def check_events(screen, chessboard, pieces, ai_settings, stats, play_button,
             check_play_button(stats, play_button, mouse_x, mouse_y, pieces)
             check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y,
                                    pieces)
+            check_retract_button(stats, retract_button, mouse_x, mouse_y, pieces)
 
 
 def update_screen(ai_settings, screen, chessboard, pieces, play_button, stats,
-                  chessbook_button):
+                  chessbook_button, retract_button):
     screen.fill(ai_settings.bg_color)
     chessboard.blit_board()
     for piece in pieces.sprites():
         piece.blit_piece()
+    if stats.game_active:
+        retract_button.draw_button()
     if not stats.game_active:
         play_button.draw_button()
         chessbook_button.draw_button()
@@ -55,6 +58,7 @@ def new_piece(screen, chessboard, mouse_x, mouse_y, pieces, ai_settings,
 
     index = i * 3 + j
     if index >= 0 and stats.boxes_status[index] == 0:
+        stats.stack.append(index)
         # get the position to place a new piece
         rect_x = chessboard.boxes[index][0] + 97
         rect_y = chessboard.boxes[index][1] + 192
@@ -135,3 +139,14 @@ def check_chessbook_button(stats, chessbook_button, mouse_x, mouse_y, pieces):
     button_clicked = chessbook_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         print(pieces)
+
+def check_retract_button(stats, retract_button, mouse_x, mouse_y, pieces):
+    button_clicked = retract_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and stats.game_active:
+        tmp = [x for x in pieces]
+        if len(tmp) > 0:
+            pieces.remove(tmp[-1])
+            stats.boxes_status[stats.stack[-1]] = 0
+            del(stats.stack[-1])
+            stats.piece_choose = not stats.piece_choose
+            

@@ -10,3 +10,4 @@ class GameStats():
         self.mouse_x = 0
         self.mouse_y = 0
         self.boxes_status = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.stack = []

@@ -16,7 +16,8 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height))
     play_button = Button(ai_settings, screen, (900, 80), "Play")
-    chessbook_button = Button(ai_settings, screen, (900, 280), "Import")
+    chessbook_button = Button(ai_settings, screen, (900, 200), "Import")
+    retract_button = Button(ai_settings, screen, (900, 320), "Retract")
     pygame.display.set_caption("Tic-Tac-Toe")
 
     chessboard = Chessboard(screen)
@@ -27,12 +28,13 @@ def run_game():
     while True:
         # listening events from mouse and keyboard
         gf.check_events(chessboard.screen, chessboard, pieces, ai_settings,
-                        stats, play_button, chessbook_button)
+                        stats, play_button, chessbook_button, retract_button)
         # visualize
         if stats.game_active:
             gf.update_pieces(pieces, screen, chessboard, stats, ai_settings)
+
         gf.update_screen(ai_settings, screen, chessboard, pieces, play_button,
-                         stats, chessbook_button)
+                         stats, chessbook_button, retract_button)
 
 
 run_game()
